@@ -1,0 +1,1703 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsfonts}
+\usepackage{upgreek}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz, pgfplots}
+\usepackage{tikz-cd}
+\usepackage[all]{xy}
+\usetikzlibrary{positioning}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\cupdot}{\mathbin{\mathaccent\cdot\cup}}
+\newcommand{\func}[3]{#1\colon #2\to#3}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+%\includegraphics[height=1cm]{cmatlogo.png}
+\title[Dimensiones en $\Z$] %optional
+{Conglomerados de Incidencia como Categoría}
+
+\subtitle{una nueva perspectiva en Geometría}
+
+\author[Andrés Alberdi] % (optional, for multiple authors)
+{Andrés Alberdi\inst{1}} 
+
+\institute[UMSA] % (optional)
+{
+  \inst{1}%
+  Licenciado en Matemática, Universidad Mayor de San Andrés
+}
+
+\date[XXVI Sobolmat 2025] % (optional)
+{XXVI Congreso Sobolmat, Abril 2025}
+
+\logo{\includegraphics[height=1cm]{sobolmat logo.png}}
+
+\pgfplotsset{compat=1.18} 
+\begin{document}
+\maketitle
+
+\section{Teoría de Conglomerados de Incidencia}
+\subsection{Introducción}
+
+\begin{frame}{Proyecto - Dimensiones en $\mathbb{Z}$}
+        \textit{Disclaimer: }Esta presentación es introductoria y toda la formalización de la Teoría de Conglomerados de Incidencia se encuentra en: 
+    \begin{block}{Documento}
+    \begin{center} PROPUESTA INICIAL PARA GENERALIZAR LOS TÉRMINOS PRIMITIVOS DE LA GEOMETRÍA ver 6.1
+    \end{center}
+    \end{block}
+    \begin{block}{Se encuentra en el sitio}
+     \url{https://dimensionesenz.blogspot.com/}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Proyecto - Dimensiones en $\mathbb{Z}$}
+Escanea el QR para ir al sitio
+    \begin{center}
+        \includegraphics[height=7cm]{Dimensiones en Z QR.png}    
+    \end{center}
+\end{frame}
+
+\begin{frame}{Proyecto - Dimensiones en $\mathbb{Z}$ - Resumen}
+    \begin{block}{Objetivo}
+        Brindar un marco conceptual matemático formal, que permita la existencia de dimensiones enteras (positivas y negativas), generalizando los conceptos de la Geometría Axiomática (Axiomas de Hilbert).
+    \end{block} \pause
+    \begin{block}{Punto de partida}
+        Teoría de conjuntos ZFC estándar.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Conglomerados como Categoría - Resumen}
+\begin{itemize}
+    \item Los objetos básicamente son los espacios Afines generalizados $A$ (punto, recta, plano, hiperplano, etc.), tal que su dimensión es $\delta(A) \in \Z$.
+    \item Así $\delta(\textit{punto})=0$, $\delta(\textit{recta})=1$, etc.
+    \item Existe una relación $u$ de inclusión generalizada entre dos objetos (un punto está en una recta, una recta está en un hiperplano, etc.).
+    \item Sean $A,B$ objetos (espacios), son iguales si $A u B$ y $B u A$.
+    \item Sean $A,B$ objetos (espacios), el espacio formado (span) por $A$ y $B$ es $A \uparrow B$ y el espacio coincidente (intersección) de $A$ y $B$ es $A \downarrow B$ (cuando exista).
+    \item En $\Z$ se cumple:
+    \[ \delta (A \uparrow B) = \delta(A) + \delta(B) - \delta(A \downarrow B) \]
+ \end{itemize}
+	
+\end{frame}
+
+\begin{frame}{Conglomerados como Categoría - Resumen}
+\begin{itemize}
+    \item Los morfismos básicamente se obtienen de $u$ entre espacios Afines generalizados $A$,$B$ (punto, recta, plano, hiperplano, etc.), dado que $u$ es una relación reflexiva, transitiva y antisimétrica.
+    $\func{f}{A}{B} \Longleftrightarrow AuB$
+    \item Así se pueden considerar los morfismos similares a los de una Categoría de POSets u órdenes parciales.
+    \item Se cumple la clausura de morfismos por la composición y la existencia de identidades.
+    \item De esta manera cada Conglomerado es una Categoría.
+    \item \textit{Obs}: Se pueden analizar las propiedades de manera similar a la Categoría de Reales con la relación menor igual: $(\R,\le)$.
+ \end{itemize}
+\end{frame}
+
+\subsection{Teoría de Conglomerados de Incidencia}
+
+\begin{frame}{Teoría de Conglomerados de Incidencia}
+        \begin{block}{Definiciones y resultados}
+        Veamos ahora más detalles sobre los conceptos señalados en el resumen, de acuerdo al documento base.
+        \end{block}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Definiciones iniciales}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item Supongamos un conjunto no vacío $\mathcal{C}$, junto con una función $\delta$ en los enteros.
+	\begin{center}
+		$\func{\delta}{\mathcal{C}}{\Z}$
+	\end{center}
+	Llamamos a este par $(\mathcal{C},\delta)$ un \textit{Conglomerado}.\\
+	\item Definimos la relación siguiente con $A,B \in \mathcal{C}$:\\ $A \equiv B \Leftrightarrow \delta(A)=\delta(B)$, que es de equivalencia.\\
+	\item La partición $\mathcal{C} \diagup \equiv$ son las clases $\{[x]: x\in \Z\}$
+ 
+\end{itemize}
+	
+\column{0.5\textwidth}
+\begin{tikzpicture}
+
+\draw[thick] (0.5,3) -- (4,3);
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw[blue] (2.25,1.75) ellipse (55 pt and 75 pt);
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw node at (5.5, 3) {[3]};
+\draw node at (5.5, 2.5) {[2]};
+\draw node at (5.5, 2) {[1]};
+\draw node at (5.5, 1.5) {[0]};
+\draw node at (5.5, 1) {[-1]};
+\draw node at (5.5, 0.5) {[-2]};
+\draw node at (5.5, 0) {$\dots$};
+
+\draw[blue] (5.5,1.75) ellipse (20 pt and 70 pt);
+
+\draw[blue] node at (2.25, 5) {$\mathcal{C}$};
+\draw[blue] node at (5.25, 5) {$\mathcal{C} \diagup \equiv$};
+\draw[blue, ->] (2.5,5) arc (135:45:1.5);
+\filldraw[red] (1.5,2) circle  (0.05);
+\filldraw[red] (3,2) circle  (0.05);
+\draw[red] node at (1.5, 1.75) {A};
+\draw[red] node at (3, 1.75) {B};
+
+\end{tikzpicture}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Definiciones iniciales}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+    Supongamos un Conglomerado $(\mathcal{C},\delta)$ y  una relación $t \subset \mathcal{C}\times\mathcal{C}$ en la clase $\mathcal{C}$, que cumpla las siguientes condiciones:
+	\begin{itemize}
+		\item[D0)] Supongamos $A,B \in \mathcal{C}$ con $(A,B) \in t$, entonces $\delta(B)=\delta(A)+1$  
+		\item[D1)] Si $(A,x) \in \delta$ entonces existen $(B,x+1), (C,x-1) \in \delta$ tales que $(A,B),(C,A) \in t$
+		\item[D2)] Si $(A,x) \in \delta$ entonces existen $(B',x+1), (C',x-1) \in \delta$ tales que $(A,B'),(C',A) \notin t$
+	\end{itemize}
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[thick] (0.5,3) -- (4,3);
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw node at (5.5, 3) {[x+3]};
+\draw node at (5.5, 2.5) {[x+2]};
+\draw[red] node at (5.5, 2) {[x+1]};
+\draw[red] node at (5.5, 1.5) {[x]};
+\draw node at (5.5, 1) {[x-1]};
+\draw node at (5.5, 0.5) {[x-2]};
+\draw node at (5.5, 0) {$\dots$};
+
+\draw[blue] node at (2.25, 4) {D0};
+\draw[blue, ->] (1.5,1.5) arc (155:63:1);
+\filldraw[red] (1.5,1.5) circle  (0.05);
+\filldraw[red] (3,2) circle  (0.05);
+\draw[red] node at (1.5, 1.25) {A};
+\draw[red] node at (3, 1.75) {B};
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Definiciones iniciales}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+    Supongamos un Conglomerado $(\mathcal{C},\delta)$ y  una relación $t \subset \mathcal{C}\times\mathcal{C}$ en la clase $\mathcal{C}$, que cumpla las siguientes condiciones:
+	\begin{itemize}
+		\item[D0)] Supongamos $A,B \in \mathcal{C}$ con $(A,B) \in t$, entonces $\delta(B)=\delta(A)+1$  
+		\item[D1)] Si $(A,x) \in \delta$ entonces existen $(B,x+1), (C,x-1) \in \delta$ tales que $(A,B),(C,A) \in t$
+		\item[D2)] Si $(A,x) \in \delta$ entonces existen $(B',x+1), (C',x-1) \in \delta$ tales que $(A,B'),(C',A) \notin t$
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.25, 4) {D1};
+\draw[thick] (0.5,3) -- (4,3);
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw node at (5.5, 3) {[x+3]};
+\draw node at (5.5, 2.5) {[x+2]};
+\draw node at (5.5, 2) {[x+1]};
+\draw node at (5.5, 1.5) {[x]};
+\draw node at (5.5, 1) {[x-1]};
+\draw node at (5.5, 0.5) {[x-2]};
+\draw node at (5.5, 0) {$\dots$};
+
+\draw[red, ->] (1.5,1.5) arc (160:65:1);
+\draw[red, ->] (3,1) arc (-60:-155:1);
+\filldraw[red] (1.5,1.5) circle  (0.05);
+\filldraw[red] (3,2) circle  (0.05);
+\filldraw[red] (3,1) circle  (0.05);
+\draw[red] node at (1.5, 1.25) {A};
+\draw[red] node at (3, 1.75) {B};
+\draw[red] node at (3, 0.75) {C};
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Definiciones iniciales}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+    Supongamos un Conglomerado $(\mathcal{C},\delta)$ y  una relación $t \subset \mathcal{C}\times\mathcal{C}$ en la clase $\mathcal{C}$, que cumpla las siguientes condiciones:
+	\begin{itemize}
+		\item[D0)] Supongamos $A,B \in \mathcal{C}$ con $(A,B) \in t$, entonces $\delta(B)=\delta(A)+1$  
+		\item[D1)] Si $(A,x) \in \delta$ entonces existen $(B,x+1), (C,x-1) \in \delta$ tales que $(A,B),(C,A) \in t$
+		\item[D2)] Si $(A,x) \in \delta$ entonces existen $(B',x+1), (C',x-1) \in \delta$ tales que $(A,B'),(C',A) \notin t$
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.25, 4) {D2};
+\draw[thick] (0.5,3) -- (4,3);
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw node at (5.5, 3) {[x+3]};
+\draw node at (5.5, 2.5) {[x+2]};
+\draw node at (5.5, 2) {[x+1]};
+\draw node at (5.5, 1.5) {[x]};
+\draw node at (5.5, 1) {[x-1]};
+\draw node at (5.5, 0.5) {[x-2]};
+\draw node at (5.5, 0) {$\dots$};
+
+\draw[blue, ->] (1.5,1.5) arc (160:65:1);
+\draw[blue, ->] (3,1) arc (-60:-155:1);
+\filldraw[red] (1.5,1.5) circle  (0.05);
+\filldraw[red] (3,2) circle  (0.05);
+\filldraw[red] (3,1) circle  (0.05);
+\draw[red] node at (1.5, 1.25) {A};
+\draw[red] node at (3.5, 1.75) {B'};
+\draw[red] node at (3.5, 0.75) {C'};
+\draw[red] node at (2.25, 2.1) {X};
+\draw[red] node at (2.25, 0.85) {X};
+
+\end{tikzpicture}
+
+\end{columns}
+\pause
+\textcolor{blue}{Así, la terna $(\mathcal{C},\delta,t)$ se llama \textbf{\textit{Conglomerado de Incidencia}}}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Definiciones iniciales}
+
+\begin{columns}
+\column{0.5\textwidth}
+\textit{Algunos resultados básicos:}
+\begin{itemize}
+    \item $\delta$ es una función sobreyectiva.\\
+   \item Para todo $x \in\Z$, existen $A,B\in [x]$, que no son iguales $A \ne B$.\\
+   \item Para todos $x,y \in\Z$, tal que $x<y$, dado $A \in [x]$ tenemos que:
+	existe $B \in [y]$ y existe\\ $I=\{x,x+1,\dots, y-1,y\}$ tal que $(\forall i \in I)( \exists D_i \in [i])$ donde $D_y:=B$, $D_x:=A$ y $i \ne y \Rightarrow (D_i t D_{i+1})$.
+ 
+\end{itemize}
+   
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[thick] (0.5,3) -- (4,3);
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw node at (5.5, 3) {[y]};
+\draw node at (5.5, 2.5) {$\dots$};
+\draw node at (5.5, 2) {[i+1]};
+\draw node at (5.5, 1.5) {[i]};
+\draw node at (5.5, 1) {$\dots$};
+\draw node at (5.5, 0.5) {[x]};
+\draw node at (5.5, 0) {$\dots$};
+
+\draw[red] node at (1.5, 0.25) {$D_x=A$};
+\draw[red] node at (3.75, 2.75) {$D_y=B$};
+\draw[red] node at (2.25, 1.25) {$D_i$};
+\draw[red] node at (2.75, 1.7) {$D_{i+1}$};
+\filldraw[red] (1.5,0.5) circle  (0.05);
+\filldraw[red] (2,1.5) circle  (0.05);
+\filldraw[red] (2.5,2) circle  (0.05);
+\filldraw[red] (3.5,3) circle  (0.05);
+
+\draw[blue, ->] (1.5,0.5) arc (170:140:1);
+\draw[blue, ->] (1.75,1) arc (170:140:1);
+\draw[blue, ->] (2,1.5) arc (160:120:1);
+\draw[blue, ->] (2.5,2) arc (170:140:1);
+\draw[blue, ->] (2.75,2.5) arc (150:100:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Definiciones iniciales}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item Sean $A, A' \in [x]$ se denota $A\cong A'$ y se dice que $A$ y $A'$ \textit{son congruentes} si $(\forall B \in [x-1]) (BtA \Leftrightarrow BtA')$\\
+    \item 
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.25, 4) {Congruencia};
+
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3) {$\dots$};
+\draw node at (5.5, 2.5) {[x+2]};
+\draw node at (5.5, 2) {[x+1]};
+\draw node at (5.5, 1.5) {[x]};
+\draw node at (5.5, 1) {[x-1]};
+\draw node at (5.5, 0.5) {[x-2]};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[red] (1.75,1.5) circle  (0.05);
+\filldraw[red] (2.75,1.5) circle  (0.05);
+\filldraw[red] (1,1) circle  (0.05);
+\filldraw[red] (2.25,1) circle  (0.05);
+\filldraw[red] (3.5,1) circle  (0.05);
+\draw[red] node at (1.75, 1.2) {A};
+\draw[red] node at (2.75, 1.2) {A'};
+\draw[red] node at (1, 0.75) {B};
+\draw[red] node at (2.25, 0.75) {B'};
+\draw[red] node at (3.5, 0.75) {B''};
+
+\draw[blue, ->] (1,1) arc (150:100:1);
+\draw[blue, ->] (1,1) arc (170:45:1);
+\draw[blue, ->] (2.25,1) arc (-120:-155:1);
+\draw[blue, ->] (2.25,1) arc (-60:-25:1);
+\draw[blue, ->] (3.5,1) arc (35:82:1);
+\draw[blue, ->] (3.5,1) arc (10:130:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Definiciones iniciales}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item Sean $A, A' \in [x]$ se denota $A\cong A'$ y se dice que $A$ y $A'$ \textit{son congruentes} si\\ $(\forall B \in [x-1]) (BtA \Leftrightarrow BtA')$
+    \item \textit{Axioma de coherencia o Ax1}
+	Sean $A,A' \in [x]$ y $C \in [x+1]$, entonces $(AtC \wedge A \cong A') \Rightarrow A'tC$. 
+    \item Con Ax1 la relación $\cong$ es de equivalencia.
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.25, 4) {Axioma 1};
+
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3) {$\dots$};
+\draw node at (5.5, 2.5) {[x+2]};
+\draw node at (5.5, 2) {[x+1]};
+\draw node at (5.5, 1.5) {[x]};
+\draw node at (5.5, 1) {[x-1]};
+\draw node at (5.5, 0.5) {[x-2]};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[red] (1.75,1.5) circle  (0.05);
+\filldraw[red] (2.75,1.5) circle  (0.05);
+\filldraw[red] (2.25,2) circle  (0.05);
+\draw[red] node at (1.75, 1.25) {A};
+\draw[red] node at (2.25, 1.25) {$\cong$};
+\draw[red] node at (2.75, 1.25) {A'};
+\draw[red] node at (2.25, 1.7) {C};
+
+\draw[red, ->] (1.75,1.5) arc (150:115:1);
+\draw[blue, ->] (2.75,1.5) arc (25:60:1);
+
+
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\subsection{Órbitas}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+    \item Definimos la relación $u \subset \mathcal{C}\times\mathcal{C}$, $(A,B) \in u$ si y solo si:
+	\begin{itemize}
+		\item[a)] $x \le y$.
+		\item[b)] $(\forall i \in \{x,\dots,y\})$ \\$(\exists D_i \in [i])(D_x \cong A \wedge D_y \cong B \wedge$\\ $((x < y)\wedge(i \ne y) \Rightarrow (D_i t D_{i+1})))$
+	\end{itemize}.
+	\item La relación u es compatible con $\cong$
+	\item La relación u es de orden respecto de $\cong$
+ 
+\end{itemize}
+   
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[thick] (0.5,3) -- (4,3);
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw node at (5.5, 3) {[y]};
+\draw node at (5.5, 2.5) {$\dots$};
+\draw node at (5.5, 2) {[i+1]};
+\draw node at (5.5, 1.5) {[i]};
+\draw node at (5.5, 1) {$\dots$};
+\draw node at (5.5, 0.5) {[x]};
+\draw node at (5.5, 0) {$\dots$};
+
+\draw[red] node at (1.5, 0.25) {$D_x \cong A$};
+\draw[red] node at (3.75, 2.75) {$D_y \cong B$};
+\draw[red] node at (2.25, 1.25) {$D_i$};
+\draw[red] node at (2.75, 1.7) {$D_{i+1}$};
+\filldraw[red] (1.5,0.5) circle  (0.05);
+\filldraw[red] (2,1.5) circle  (0.05);
+\filldraw[red] (2.5,2) circle  (0.05);
+\filldraw[red] (3.5,3) circle  (0.05);
+
+\draw[blue, ->] (1.5,0.5) arc (170:140:1);
+\draw[blue, ->] (1.75,1) arc (170:140:1);
+\draw[blue, ->] (2,1.5) arc (160:120:1);
+\draw[blue, ->] (2.5,2) arc (170:140:1);
+\draw[blue, ->] (2.75,2.5) arc (150:100:1);
+\draw[teal, ->] (1.5,0.5) arc (183:105:2.5);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+    \item 	Sea $x,y,z\in\Z$, con $A \in [x]$, definimos los conjuntos:\\
+	$u^*(A)_y = \{B \in [y] : AuB\}$\\ 
+	$u_*(A)_z = \{C \in [z] : CuA\}$ \\
+	\item
+	\item
+
+\end{itemize}
+   
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.25, 4.5) {$u^*(A)_y$};
+\draw[teal] node at (2.25, -0.5) {$u_*(A)_z$};
+
+\draw[thick] (0.5,3.5) -- (4,3.5);
+\draw[thick] (0.5,3) -- (4,3);
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw node at (5.5, 3) {[y]};
+\draw node at (5.5, 2.5) {$\dots$};
+\draw node at (5.5, 2) {[x]};
+\draw node at (5.5, 1.5) {$\dots$};
+\draw node at (5.5, 1) {[z]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[teal] (1.5,1) circle  (0.05);
+\filldraw[teal] (2,1) circle  (0.05);
+\filldraw[teal] (3.5,1) circle  (0.05);
+\filldraw[red] (2.5,2) circle  (0.05);
+\filldraw[blue] (1.5,3) circle  (0.05);
+\filldraw[blue] (3,3) circle  (0.05);
+\filldraw[blue] (3.5,3) circle  (0.05);
+
+\draw[red] node at (2.5, 1.75) {A};
+\draw[teal] node at (1.5, 0.75) {C};
+\draw[teal] node at (2, 0.75) {C'};
+\draw[teal] node at (3.5, 0.75) {C''};
+\draw[blue] node at (1.5, 2.75) {B};
+\draw[blue] node at (3, 2.75) {B'};
+\draw[blue] node at (3.5, 2.75) {B''};
+
+\draw[->] (2.5,2) arc (187:122:1);
+\draw[->] (2.5,2) arc (2:90:1);
+\draw[->] (2.5,2) arc (155:115:2);
+\draw[->] (1.5,1) arc (175:95:1);
+\draw[->] (2,1) arc (186:122:1);
+\draw[->] (3.5,1) arc (2:85:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+    \item 	Sea $x,y,z\in\Z$, con $A \in [x]$, definimos los conjuntos:\\
+	$u^*(A)_y = \{B \in [y] : AuB\}$\\ 
+	$u_*(A)_z = \{C \in [z] : CuA\}$ \\
+    \item $u^*(A) = \bigcup_{z \in \Z} u^*(A)_z$ se denomina \textit{Órbita superior de $A$}\\ 
+	$u_*(A) = \bigcup_{z \in \Z} u_*(A)_z$ se denomina \textit{Órbita inferior de $A$}\\
+	\item 
+\end{itemize}
+   
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.25, 4.5) {$u^*(A)$};
+\draw[teal] node at (2.25, -0.5) {$u_*(A)$};
+
+\draw[thick] (0.5,3.5) -- (4,3.5);
+\draw[thick] (0.5,3) -- (4,3);
+\draw[thick] (0.5,2.5) -- (4,2.5);
+\draw[thick] (0.5,2) -- (4,2);
+\draw[thick] (0.5,1.5) -- (4,1.5);
+\draw[thick] (0.5,1) -- (4,1);
+\draw[thick] (0.5,.5) -- (4,.5);
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw node at (5.5, 3) {[y]};
+\draw node at (5.5, 2.5) {$\dots$};
+\draw node at (5.5, 2) {[x]};
+\draw node at (5.5, 1.5) {$\dots$};
+\draw node at (5.5, 1) {[z]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[teal] (1.5,1) circle  (0.05);\draw[teal] node at (1.5, 0.75) {C};
+\filldraw[teal] (2,0.5) circle  (0.05);\draw[teal] node at (2, 0.25) {C'};
+\filldraw[teal] (3.5,1) circle  (0.05);\draw[teal] node at (3.5, 0.75) {C''};
+\filldraw[teal] (1,1.5) circle  (0.05);\draw[teal] node at (1, 1.25) {C'''};
+\filldraw[teal] (3,1.5) circle  (0.05);\draw[teal] node at (3, 1.25) {C''''};
+\filldraw[red] (2.5,2) circle  (0.05);\draw[red] node at (2.5, 1.75) {A};
+\filldraw[blue] (1.5,3) circle  (0.05);\draw[blue] node at (1.5, 2.75) {B};
+\filldraw[blue] (3.5,3) circle  (0.05);\draw[blue] node at (3.5, 2.75) {B'};
+\filldraw[blue] (3,3.5) circle  (0.05);\draw[blue] node at (3, 3.25) {B''};
+\filldraw[blue] (1,2.5) circle  (0.05);\draw[blue] node at (1, 2.25) {B'''};
+\filldraw[blue] (2,3.5) circle  (0.05);\draw[blue] node at (2, 3.25) {B''''};
+
+\draw[->] (2.5,2) arc (2:90:1);
+\draw[->] (2.5,2) arc (187:140:2);
+\draw[->] (2.5,2) arc (155:115:2);
+\draw[->] (2.5,2) arc (50:95:2);
+\draw[->] (2.5,2) arc (-2:43:2);
+
+\draw[->] (1.5,1) arc (175:95:1);
+\draw[->] (2,0.5) arc (186:140:2);
+\draw[->] (3.5,1) arc (2:85:1);
+\draw[->] (1,1.5) arc (155:68:1);
+\draw[->] (3,1.5) arc (20:65:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
+    \item 	Sea $x,y,z\in\Z$, con $A \in [x]$, definimos los conjuntos:\\
+	$u^*(A)_y = \{B \in [y] : AuB\}$\\ 
+	$u_*(A)_z = \{C \in [z] : CuA\}$ \\
+	\item $u^*(A) = \bigcup_{z \in \Z} u^*(A)_z$ se denomina \textit{Órbita superior de $A$}\\ 
+	$u_*(A) = \bigcup_{z \in \Z} u_*(A)_z$ se denomina \textit{Órbita inferior de $A$}\\
+	\item Sea $w\in\Z$ tal que $z \le \{x,w\} \le y$ y $D \in [w]$, entonces:\\
+	$u^*(A,D)_y = u^*(A)_y \cap u^*(D)_y = \{B \in [y] : AuB \wedge CuB\}$\\
+	$u_*(A,D)_z = u_*(A)_z \cap u_*(D)_z = \{C \in [z] : CuA \wedge CuB\}$
+
+\end{itemize}
+   
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.25, 4.5) {$u^*(A,D)_y$};
+\draw[teal] node at (2.25, -0.5) {$u_*(A,D)_z$};
+
+\draw node at (5.5, 4) {$\dots$};
+\draw[thick] (0.5,3.5) -- (4,3.5);\draw node at (5.5, 3.5) {[y]};
+\draw[thick] (0.5,3) -- (4,3);\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[w]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {$\dots$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[x]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {$\dots$};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw node at (5.5, 0.5) {[z]};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[blue] (1.5,3.5) circle  (0.05);\draw[blue] node at (1.5, 3.25) {B};
+\filldraw[blue] (3,3.5) circle  (0.05);\draw[blue] node at (3, 3.25) {B'};
+\filldraw[blue] (3.5,3.5) circle  (0.05);\draw[blue] node at (3.5, 3.25) {B''};
+
+\filldraw[teal] (1.5,0.5) circle  (0.05);\draw[teal] node at (1.5, 0.25) {C};
+\filldraw[teal] (2,0.5) circle  (0.05);\draw[teal] node at (2, 0.25) {C'};
+\filldraw[teal] (3.5,0.5) circle  (0.05);\draw[teal] node at (3.5, 0.25) {C''};
+
+\filldraw[red] (2,2.5) circle  (0.05);\draw[red] node at (2, 2.25) {D};
+\filldraw[red] (2.5,1.5) circle  (0.05);\draw[red] node at (2.5, 1.25) {A};
+
+\draw[->] (2,2.5) arc (150:100:2);
+\draw[->] (2,2.5) arc (-5:60:1);
+\draw[->] (2,2.5) arc (155:115:2);
+
+\draw[->] (2.5,1.5) arc (195:135:2);
+\draw[->] (2.5,1.5) arc (-7:60:2);
+\draw[->] (2.5,1.5) arc (186:120:2);
+
+\draw[->] (1.5,0.5) arc (175:95:1);
+\draw[->] (2,0.5) arc (186:122:1);
+\draw[->] (3.5,0.5) arc (2:85:1);
+
+\draw[->] (1.5,0.5) arc (200:140:2);
+\draw[->] (2,0.5) arc (210:153:2);
+\draw[->] (3.5,0.5) arc (0:75:2);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+\begin{columns}
+\column{0.5\textwidth}
+Sean los objetos $A,B \in \mathcal{C}$: 
+	\begin{itemize}
+		\item[a)] Si $\delta(u_*(A,B)) \ne \emptyset$, definimos:
+		$m(A,B) = max\{w \in \Z : w \in \delta(u_*(A,B)) \}$ y\\
+		$M(A,B) = \delta(A) + \delta(B)-m(A,B)$
+		\item
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (1.5, -0.5) {$u_*(A,B)$};
+\draw[blue] node at (3.5, -1) {$\delta(u_*(A,B))$};
+\draw[blue] (4.75,-1) -- (4.75,1.75);
+\draw[blue] (4.5,-1) -- (4.75,-1);
+
+
+\draw node at (5.5, 4) {$\dots$};
+\draw[thick] (0.5,3.5) -- (4,3.5);\draw[teal] node at (5.5, 3.5) {[M(A,B)]};
+\draw[thick] (0.5,3) -- (4,3);\draw[red] node at (5.5, 3) {$[\delta(B)]$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {$\dots$};
+\draw[thick] (0.5,2) -- (4,2);\draw[red] node at (5.5, 2) {$[\delta(A)]$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw[teal] node at (5.5, 1.5) {[m(A,B)]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {$\dots$};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw node at (5.5, 0.5) {[w]};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[blue] (1.5,1) circle  (0.05);\draw[blue] node at (1.5, 0.75) {C};
+\filldraw[teal] (2,1.5) circle  (0.05);\draw[teal] node at (2, 1.25) {C'};
+\filldraw[blue] (3.5,1) circle  (0.05);\draw[blue] node at (3.5, 0.75) {C''};
+\filldraw[blue] (3,0.5) circle  (0.05);\draw[blue] node at (3, 0.25) {C'''};
+\filldraw[blue] (0.75,0.5) circle  (0.05);\draw[blue] node at (0.75, 0.25) {C''''};
+
+\filldraw[red] (2,3) circle  (0.05);\draw[red] node at (2, 2.75) {B};
+\filldraw[red] (2.5,2) circle  (0.05);\draw[red] node at (2.5, 1.75) {A};
+
+\draw[->] (1.5,1) arc (175:95:1);
+\draw[->] (2,1.5) arc (155:120:1);
+\draw[->] (3.5,1) arc (2:85:1);
+\draw[->] (3,0.5) arc (-2:43:2);
+\draw[->] (0.75,0.5) arc (165:100:2);
+
+\draw[->] (1.5,1) arc (198:140:2);
+\draw[->] (2,1.5) arc (227:135:1);
+\draw[->] (3.5,1) arc (-1:75:2);
+\draw[->] (3,0.5) arc (-20:65:2);
+\draw[->] (0.75,0.5) arc (181:128:3);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+\begin{columns}
+\column{0.5\textwidth}
+Sean los objetos $A,B \in \mathcal{C}$: 
+	\begin{itemize}
+		\item[a)] Si $\delta(u_*(A,B)) \ne \emptyset$, definimos:
+		$m(A,B) = max\{w \in \Z : w \in \delta(u_*(A,B)) \}$ y\\
+		$M(A,B) = \delta(A) + \delta(B)-m(A,B)$
+		\item[b)] Si $\delta(u_*(A,B)) = \emptyset$, definimos que:\\
+		$m(A,B)$ no existe y que \\
+		$M(A,B) = max\{\delta(A), \delta(B)\}+1$
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (1.5, -0.5) {$u_*(A,B)$};
+\draw[teal] node at (3.5, -1) {$\delta(u_*(A,B)) = \emptyset$};
+
+\draw node at (5.5, 4) {$\dots$};
+\draw[thick] (0.5,3.5) -- (4,3.5);\draw[teal] node at (5.5, 3.5) {[M(A,B)]};
+\draw[thick] (0.5,3) -- (4,3);\draw[red] node at (5.5, 3) {$[\delta(B)]$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {$\dots$};
+\draw[thick] (0.5,2) -- (4,2);\draw[red] node at (5.5, 2) {$[\delta(A)]$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw[teal] node at (5.5, 1.5) {$\dots$};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw node at (5.5, 0.5) {};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[blue] (1.5,1) circle  (0.05);\draw[blue] node at (1.5, 0.75) {C};
+\filldraw[blue] (2,1.5) circle  (0.05);\draw[blue] node at (2, 1.25) {C'};
+\filldraw[blue] (3.5,1) circle  (0.05);\draw[blue] node at (3.5, 0.75) {C''};
+\filldraw[blue] (3,0.5) circle  (0.05);\draw[blue] node at (3, 0.25) {C'''};
+\filldraw[blue] (0.75,0.5) circle  (0.05);\draw[blue] node at (0.75, 0.25) {C''''};
+
+\filldraw[red] (2,3) circle  (0.05);\draw[red] node at (2, 2.75) {B};
+\filldraw[red] (2.5,2) circle  (0.05);\draw[red] node at (2.5, 1.75) {A};
+
+\draw[->] (1.5,1) arc (175:95:1);
+\draw[->] (3.5,1) arc (2:85:1);
+
+
+\draw[->] (2,1.5) arc (227:135:1);
+\draw[->] (3,0.5) arc (-20:65:2);
+\draw[->] (0.75,0.5) arc (181:128:3);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+\begin{columns}
+\column{0.5\textwidth}
+ \textit{Axioma de incidencia o Ax2} Sean $A, B \in \mathcal{C}$:
+	\begin{itemize} 
+		\item[a)] Si $\exists m(A,B)$ entonces existe $D \in [m(A,B)]$ tal que:\\
+		 $(\forall z \le min\{\delta(A),\delta(B)\})$
+		 $(u_*(A,B)_z \subset u_*(D)_z)$
+		\item
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.5, 4.5) {Axioma 2a};
+\draw[blue] node at (2.5, -0.5) {$u_*(A,B)_z$};
+
+\draw[thick] (0.5,3.5) -- (4,3.5);\draw node at (5.5, 3.5) {$\dots$};
+\draw[thick] (0.5,3) -- (4,3);\draw[red] node at (5.5, 3) {$[\delta(B)]$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {$\dots$};
+\draw[thick] (0.5,2) -- (4,2);\draw[red] node at (5.5, 2) {$[\delta(A)]$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw[teal] node at (5.5, 1.5) {[m(A,B)]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {$\dots$};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw node at (5.5, 0.5) {[z]};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[red] (2,3) circle  (0.05);\draw[red] node at (2, 2.75) {B};
+\filldraw[red] (2.5,2) circle  (0.05);\draw[red] node at (2.5, 1.75) {A};
+
+\filldraw[teal] (2,1.5) circle  (0.05);\draw[teal] node at (2, 1.25) {D};
+\filldraw[blue] (1.5,0.5) circle  (0.05);\draw[blue] node at (1.5, 0.25) {C};
+\filldraw[blue] (0.75,0.5) circle  (0.05);\draw[blue] node at (0.75, 0.25) {C'};
+\filldraw[blue] (3,0.5) circle  (0.05);\draw[blue] node at (3, 0.25) {C''};
+
+\draw[->] (2,1.5) arc (155:120:1);
+\draw[->] (1.5,0.5) arc (175:122:2);
+\draw[->] (0.75,0.5) arc (165:100:2);
+\draw[->] (3,0.5) arc (-2:43:2);
+
+\draw[->] (2,1.5) arc (227:135:1);
+\draw[->] (1.5,0.5) arc (208:130:2);
+\draw[->] (0.75,0.5) arc (181:128:3);
+\draw[->] (3,0.5) arc (-20:65:2);
+
+\draw[teal, ->] (1.5,0.5) arc (172:138:2);
+\draw[teal, ->] (0.75,0.5) arc (152:108:2);
+\draw[teal, ->] (3,0.5) arc (0:84:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+\begin{columns}
+\column{0.5\textwidth}
+ \textit{Axioma de incidencia o Ax2} Sean $A, B \in \mathcal{C}$:
+	\begin{itemize} 
+		\item[a)] Si $\exists m(A,B)$ entonces existe $D \in [m(A,B)]$ tal que:\\
+		 $(\forall z \le min\{\delta(A),\delta(B)\})$
+		 $(u_*(A,B)_z \subset u_*(D)_z)$
+		\item[b)] Existe $E \in [M(A,B)]$ tal que: $(\forall z \ge max\{\delta(A),\delta(B)\})$ 
+		$(u^*(A,B)_z \subset u^*(E)_z)$ 
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[blue] node at (2.5, 5) {Axioma 2b};
+\draw[blue] node at (1.5, 4.5) {$u^*(A,B)_z$};
+
+\draw node at (5.5, 4) {$\dots$};
+\draw[thick] (0.5,3.5) -- (4,3.5);\draw node at (5.5, 3.5) {[z]};
+\draw[thick] (0.5,3) -- (4,3);\draw[red] node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw[teal] node at (5.5, 2.5) {[M(A,B)]};
+\draw[thick] (0.5,2) -- (4,2);\draw[red] node at (5.5, 2) {$[\delta(B)]$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {$\dots$};
+\draw[thick] (0.5,1) -- (4,1);\draw[red] node at (5.5, 1) {$[\delta(A)]$};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (3,2) circle  (0.05);\draw[red] node at (3, 1.75) {B};
+\filldraw[red] (2.5,1) circle  (0.05);\draw[red] node at (2.5, 0.75) {A};
+
+\filldraw[teal] (1.5,2.5) circle  (0.05);\draw[teal] node at (1.5, 2.25) {E};
+\filldraw[blue] (1.5,3.5) circle  (0.05);\draw[blue] node at (1.5, 3.75) {C};
+\filldraw[blue] (0.75,3.5) circle  (0.05);\draw[blue] node at (0.75, 3.75) {C'};
+\filldraw[blue] (3,3.5) circle  (0.05);\draw[blue] node at (3, 3.75) {C''};
+
+\draw[->] (2.5,1) arc (5:57:2);
+\draw[->] (2.5,1) arc (-13:85:2);
+\draw[->] (2.5,1) arc (-20:64:2);
+\draw[->] (2.5,1) arc (195:145:3);
+
+\draw[->] (3,2) arc (11:75:2);
+\draw[->] (3,2) arc (30:85:3);
+\draw[->] (3,2) arc (50:96:2);
+\draw[->] (3,2) arc (-20:25:2);
+
+\draw[teal, ->] (1.5,2.5) arc (191:165:2);
+\draw[teal, ->] (1.5,2.5) arc (151:100:2);
+\draw[teal, ->] (1.5,2.5) arc (0:78:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Orbitas}
+
+Algunas propiedades de M y m:
+\begin{itemize}
+    \item 	Sean $A,B \in \mathcal{C}$, entonces:
+	\begin{itemize} 
+		\item[a)] Si $\exists m(A,B)$ entonces $m(A,B) = max\{w \le min\{\delta(A),\delta(B)\}: u_*(A,B)_w \ne \emptyset \}$
+		\item[b)] $M(A,B) = min\{w \ge max\{\delta(A),\delta(B)\}: u^*(A,B)_w \ne \emptyset \}$  
+	\end{itemize}
+	\item Si $A,B \in [x]$ y $\exists m(A,B)$ con $m(A,B) = x$ entonces $A \cong B$
+	\item Sean $A,B \in \mathcal{C}$, entonces:
+	\begin{itemize}
+	  	\item [a)] Si $\exists m(A,B)$, considerando la existencia de $D \in [m(A,B)]$ en Ax2a, si $(\exists D' \in [m(A,B)])(D'uA \wedge D'uB)$ entonces $D \cong D'$.
+	   \item [b)] Considerando la existencia de $E \in [M(A,B)]$ en Ax2b si $(\exists E' \in [M(A,B)])(AuE'\wedge BuE')$ entonces $E \cong E'$.
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\subsection{Operadores Flecha}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+
+\begin{columns}
+\column{0.5\textwidth}
+	Sean $A,B \in \mathcal{C}$, entonces:
+	\begin{itemize}
+    	\item [a)] Si $\exists m(A,B)$, existe un único $D \in [m(A,B)]$ tal que $DuA \wedge DuB$.  Denominamos $A \downarrow B$ a este único $D$ (Considerando $\cong$-equivalencia).
+	    \item [b)] 
+	\end{itemize}
+
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 4) {$\dots$};
+\draw[thick] (0.5,3.5) -- (4,3.5);\draw[blue] node at (5.5, 3.5) {[M(A,B)]};
+\draw[thick] (0.5,3) -- (4,3);\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw[red] node at (5.5, 2.5) {$[\delta(B)]$};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {$\dots$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw[red] node at (5.5, 1.5) {$[\delta(A)]$};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {$\dots$};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw[teal] node at (5.5, 0.5) {[m(A,B)]};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[red] (1.5,2.5) circle  (0.05);\draw[red] node at (1.6, 2.25) {B};
+\filldraw[red] (2.5,1.5) circle  (0.05);\draw[red] node at (2.6, 1.25) {A};
+
+\pause
+
+\filldraw[blue] (2,3.5) circle  (0.05);\draw[blue] node at (2, 3.75) {$E \cong A \uparrow B$};
+\draw[blue, ->] (1.5,2.5) arc (170:140:2);
+\draw[blue, ->] (2.5,1.5) arc (-18:41:2);
+%\filldraw[teal] (2,0.5) circle  (0.05);\draw[teal] node at (2, 0.25) {$D \cong A \downarrow B$};
+%\draw[teal, ->] (2,0.5) arc (-42:-12:2);
+%\draw[teal, ->] (2,0.5) arc (225:168:2);
+
+\end{tikzpicture}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+
+\begin{columns}
+\column{0.5\textwidth}
+	Sean $A,B \in \mathcal{C}$, entonces:
+	\begin{itemize}
+    	\item [a)] Si $\exists m(A,B)$, existe un único $D \in [m(A,B)]$ tal que $DuA \wedge DuB$.  Denominamos $A \downarrow B$ a este único $D$ (Considerando $\cong$-equivalencia).
+	    \item [b)] Existe un único $E \in [M(A,B)]$ tal que 
+	$AuE \wedge BuE$. Denominamos $A \uparrow B$ a este único $E$ (Considerando $\cong$-equivalencia). 
+	\end{itemize}
+
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 4) {$\dots$};
+\draw[thick] (0.5,3.5) -- (4,3.5);\draw[blue] node at (5.5, 3.5) {[M(A,B)]};
+\draw[thick] (0.5,3) -- (4,3);\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw[red] node at (5.5, 2.5) {$[\delta(B)]$};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {$\dots$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw[red] node at (5.5, 1.5) {$[\delta(A)]$};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {$\dots$};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw[teal] node at (5.5, 0.5) {[m(A,B)]};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[red] (1.5,2.5) circle  (0.05);\draw[red] node at (1.6, 2.25) {B};
+\filldraw[red] (2.5,1.5) circle  (0.05);\draw[red] node at (2.6, 1.25) {A};
+\filldraw[blue] (2,3.5) circle  (0.05);\draw[blue] node at (2, 3.75) {$E \cong A \uparrow B$};
+\draw[blue, ->] (1.5,2.5) arc (170:140:2);
+\draw[blue, ->] (2.5,1.5) arc (-18:41:2);
+
+\filldraw[teal] (2,0.5) circle  (0.05);\draw[teal] node at (2, 0.25) {$D \cong A \downarrow B$};
+\draw[teal, ->] (2,0.5) arc (-42:-12:2);
+\draw[teal, ->] (2,0.5) arc (225:168:2);
+
+\end{tikzpicture}
+
+\end{columns}
+
+\begin{center}
+    \alert{$M(A,B)=\delta(A)+\delta(B)-m(A,B)$}\\
+    \alert{$\delta(A \uparrow B)=\delta(A)+\delta(B)-\delta(A \downarrow B)$}
+\end{center}
+
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+
+\begin{center}
+    Algunas propiedades de $\uparrow$ y $\downarrow$
+\end{center}
+
+\begin{columns}
+\column{0.5\textwidth}
+	Sean $A,B \in \mathcal{C}$, entonces:
+	\begin{itemize}
+    	\item[a)] $(A \uparrow A) \cong A$\\
+	    \item[b)] $Au(A \uparrow B)$ y $Bu(A \uparrow B)$\\
+	    \item[c)] $AuB \Leftrightarrow (A\uparrow B) \cong B$\\
+	    \item[d)] $(A \uparrow B) \cong (B \uparrow A)$ \\
+	    \item[e)] $A \cong B \Leftrightarrow (A \uparrow B) \cong A$
+	\end{itemize}
+
+
+\column{0.5\textwidth}
+
+	Sean $A,B \in \mathcal{C}$ y $\exists m(A,B)$, entonces
+	\begin{itemize}
+	    \item[a)] $(A \downarrow A) \cong A$\\
+    	\item[b)] $(A \downarrow B)uA$ y $(A \downarrow B)uB$\\
+	    \item[c)] $AuB \Leftrightarrow (A \downarrow B) \cong A$\\
+	    \item[d)] $A \downarrow B \cong B \downarrow A$ \\
+	    \item[e)] $A \cong B \Leftrightarrow (A \downarrow B) \cong B$
+	\end{itemize}
+\end{columns}
+	\begin{itemize}
+ 		\item $\forall z \ge max\{\delta(A),\delta(B)\}$, $u^*(A\uparrow B)_z= u^*(A)_z\cap u^*(B)_z$
+		\item $\forall w \le min\{\delta(A),\delta(B)\}$ y $\exists m(A,B)$, $u_*(A\downarrow B)_z= u_*(A)_z \cap u_*(B)_z$
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+
+\begin{center}
+    Otras propiedades de $\uparrow$ y $\downarrow$
+\end{center}
+
+\begin{columns}
+\column{0.5\textwidth}
+Sean $A,B,C,D,E \in \mathcal{C}$ tales que $DuB$ y $EuC$, se cumple que:
+	\begin{itemize}
+		\item[a)] Si $(B \uparrow C) u A$ entonces $(D \uparrow E) uA$
+		\item[b)] Si además $\exists m(B,C)$ y $\exists m(D,E)$, se cumple $Au(D \downarrow E)$ entonces $A u (B \downarrow C)$
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+	Sean $A,B,C \in \mathcal{C}$, entonces:
+	\begin{itemize}
+	    	\item[a)] Se cumple que [$AuC$, $BuC$ y $(\forall D \in \mathcal{C})(AuD \wedge BuD \Rightarrow CuD)$] si y solo si\\
+	$C \cong (A \uparrow B)$
+	    \item[b)] Si además $\exists m(A,B)$ se cumple que [$CuA$, $CuB$ y $(\forall D \in \mathcal{C})(DuA \wedge DuA \Rightarrow DuC)$] si y solo si $C \cong (A \downarrow B)$
+
+	\end{itemize}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+
+\begin{center}
+     \textit{Axioma de Construcción o Ax3}
+\end{center}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+	Sean $A, B \in \mathcal{C}$ tales que $AuB$:
+	\begin{itemize}
+    	\item[a)] $(\forall z < \delta(B)(\exists C \in [z])$ $(B \cong (A \uparrow C))$
+	    \item
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw[thick] (0.5,3) -- (4,3);\draw[red] node at (5.5, 3) {$[\delta(B)]$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {$\dots$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw[blue] node at (5.5, 1.5) {$[z]$};
+\draw[thick] (0.5,1) -- (4,1);\draw[red] node at (5.5, 1) {$[\delta(A)]$};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[blue] (2,3) circle  (0.05);\draw[blue] node at (2, 3.25) {$A \uparrow C$};
+\filldraw[red] (2,3) circle  (0.05);\draw[red] node at (2, 2.75) {B};
+\filldraw[blue] (3.5,1.5) circle  (0.05);\draw[blue] node at (3.5, 1.25) {C};
+\filldraw[red] (1.5,1) circle  (0.05);\draw[red] node at (1.5, 0.75) {A};
+
+\draw[->,blue] (3.5,1.5) arc (257:196:2);
+\draw[->,red] (1.5,1) arc (185:147:3);
+
+\end{tikzpicture}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+
+\begin{center}
+     \textit{Axioma de Construcción o Ax3}
+\end{center}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+	Sean $A, B \in \mathcal{C}$ tales que $AuB$:
+	\begin{itemize}
+    	\item[a)] $(\forall z < \delta(B)(\exists C \in [z])$ $(B \cong (A \uparrow C))$
+	    \item
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3.5) {$\dots$};
+\draw[thick] (0.5,3) -- (4,3);\draw[red] node at (5.5, 3) {$[\delta(B)]$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw[teal] node at (5.5, 2.5) {[z]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {$\dots$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {};
+\draw[thick] (0.5,1) -- (4,1);\draw[red] node at (5.5, 1) {$[\delta(A)]$};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[teal] (2,3) circle  (0.05);\draw[teal] node at (2, 3.25) {$A \uparrow C$};
+\filldraw[red] (2,3) circle  (0.05);\draw[red] node at (2, 2.75) {B};
+\filldraw[teal] (3.5,2.5) circle  (0.05);\draw[teal] node at (3.5, 2.25) {C};
+\filldraw[red] (1.5,1) circle  (0.05);\draw[red] node at (1.5, 0.75) {A};
+
+\draw[->,teal] (3.5,2.5) arc (272:228:2);
+\draw[->,red] (1.5,1) arc (185:147:3);
+
+\end{tikzpicture}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+\begin{center}
+     \textit{Axioma de Construcción o Ax3}
+\end{center}
+
+\begin{columns}
+\column{0.5\textwidth}
+	Sean $A, B \in \mathcal{C}$ tales que $AuB$:
+	\begin{itemize}
+    	\item[a)] $(\forall z < \delta(B)(\exists C \in [z])$ $(B \cong (A \uparrow C))$
+	    \item[b)] $(\forall w > \delta(A)(\exists D \in [w])$ $(A \cong (B \downarrow D))$
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[thick] (0.5,3) -- (4,3);\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw[red] node at (5.5, 2.5) {$[\delta(B)]$};
+\draw[thick] (0.5,2) -- (4,2);\draw[blue] node at (5.5, 2) {$[w]$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {$\dots$};
+\draw[thick] (0.5,1) -- (4,1);\draw[blue] node at (5.5, 1) {};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw[red] node at (5.5, 0.5) {$[\delta(A)]$};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[red] (2.5,2.5) circle  (0.05);\draw[red] node at (2.5, 2.25) {B};
+\filldraw[blue] (3.5,2) circle  (0.05);\draw[blue] node at (3.6, 1.75) {D};
+\filldraw[red] (2,0.5) circle  (0.05);\draw[red] node at (2.25, 0.75) {A};
+\filldraw[blue] (2,0.5) circle  (0.05);\draw[blue] node at (2, 0.2) {$B \downarrow D$};
+
+\draw[->,blue] (2,0.5) arc (-78:-15:2);
+\draw[->,red] (2,0.5) arc (185:147:3);
+
+\end{tikzpicture}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+\begin{center}
+     \textit{Axioma de Construcción o Ax3}
+\end{center}
+
+\begin{columns}
+\column{0.5\textwidth}
+	Sean $A, B \in \mathcal{C}$ tales que $AuB$:
+	\begin{itemize}
+    	\item[a)] $(\forall z < \delta(B)(\exists C \in [z])$ $(B \cong (A \uparrow C))$
+	    \item[b)] $(\forall w > \delta(A)(\exists D \in [w])$ $(A \cong (B \downarrow D))$
+	\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[thick] (0.5,3) -- (4,3);\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw[red] node at (5.5, 2.5) {$[\delta(B)]$};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {$\dots$};
+\draw[thick] (0.5,1) -- (4,1);\draw[teal] node at (5.5, 1) {[w]};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw[red] node at (5.5, 0.5) {$[\delta(A)]$};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[red] (2.5,2.5) circle  (0.05);\draw[red] node at (2.5, 2.25) {B};
+\filldraw[teal] (3.5,1) circle  (0.05);\draw[teal] node at (3.6, 0.75) {D};
+\filldraw[red] (2,0.5) circle  (0.05);\draw[red] node at (2.25, 0.75) {A};
+\filldraw[teal] (2,0.5) circle  (0.05);\draw[teal] node at (2, 0.2) {$B \downarrow D$};
+
+\draw[->,teal] (2,0.5) arc (-95:-50:2);
+\draw[->,red] (2,0.5) arc (185:147:3);
+
+\end{tikzpicture}
+
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Operadores $\uparrow$ y $\downarrow$}
+
+\begin{center}
+    Propiedad con base en Ax3
+\end{center}
+
+\begin{columns}
+\column{0.5\textwidth}
+    Sea $A \in \mathcal{C}$, entonces para todos $x,y > \delta(A)$ existen $B,C \in \mathcal{C}$ con $\delta(B)=x$ y $\delta(C)=y$ tales que $A \cong (B \downarrow C)$.
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw[thick] (0.5,3) -- (4,3);\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw[red] node at (5, 2.5){$[x]$};\draw[blue] node at (5.8, 2.5) {$[\delta(B)]$};
+\draw[thick] (0.5,2) -- (4,2);\draw[red] node at (5, 2){$[y]$};\draw[blue] node at (5.8, 2) {$[\delta(C)]$};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {$\dots$};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {};
+\draw[thick] (0.5,0.5) -- (4,0.5);\draw[red] node at (5.5, 0.5) {$[\delta(A)]$};
+\draw node at (5.5, 0) {$\dots$};
+
+\filldraw[blue] (2.5,2.5) circle  (0.05);\draw[blue] node at (2.5, 2.25) {B};
+\filldraw[blue] (3.5,2) circle  (0.05);\draw[blue] node at (3.6, 1.75) {C};
+\filldraw[red] (2,0.5) circle  (0.05);\draw[red] node at (2.25, 0.75) {A};
+\filldraw[blue] (2,0.5) circle  (0.05);\draw[blue] node at (2, 0.2) {$B \downarrow C$};
+
+\draw[->,blue] (2,0.5) arc (-78:-15:2);
+\draw[->,blue] (2,0.5) arc (185:147:3);
+
+\end{tikzpicture}
+
+\end{columns}
+
+\end{frame}
+
+\subsection{Modelos y Axiomas de Incidencia}
+
+\begin{frame}{Teoría de Conglomerados - Primer Modelo}
+
+	Tomemos como un ejemplo de Conglomerado a los números racionales positivos $\mathcal{C} = \mathbb{Q}_+$.
+	Si $A \in \mathbb{Q}_+$ entonces: $\exists p,q \in \Z$ tales que $A=\frac{p}{q}$, además por el Teorema Fundamental de la Aritmética $\exists n,m \in \mathbb{N}$ tales que
+	\begin{align*}
+		p=\prod^{n}_{i=1}{p_i} \qquad q=\prod^{m}_{i=1}{q_i}
+	\end{align*}
+	Con $p_i, q_i \in \mathbb{P}$, primos para todo $i \in \mathbb{N}$
+	Definimos la función: 
+	\begin{align*}
+		\delta:&\mathbb{Q}_+ \longrightarrow \Z\\
+		&A \longmapsto n-m		
+	\end{align*}
+	La relación $t$ se define conforme lo siguiente: Sean $\frac{a}{b}, \frac{c}{d} \in \mathbb{Q}_+$, entonces:
+	\begin{align*}
+		\frac{a}{b} t \frac{c}{d} \Longleftrightarrow \exists p \in \mathbb{P}: \frac{c}{d} = \frac{pa}{b}
+	\end{align*}
+
+\end{frame}
+
+\begin{frame}{Proyecto - Dimensiones en $\mathbb{Z}$}
+    \begin{block}{Axiomas de Hilbert}
+        Veamos cómo se aplica lo señalado para los Axiomas de Incidencia de Hilbert.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Hilbert}
+
+\begin{itemize}
+	\item Se define la noción primitiva de \textit{Punto} como un elemento de $[0]$.
+	\item Se define la noción primitiva de \textit{Recta} como un elemento de $[1]$.
+	\item Se define la noción primitiva de \textit{Plano} como un elemento de $[2]$ 
+	\item Se define la relación primitiva \textquotedblleft\textit{yace en}\textquotedblright como la relación $t\in ([0] \times [1]) \cup ([1] \times [2]) \cup ([2] \times [3])$, conforme lo señalado previamente.
+\end{itemize}
+\begin{center}
+Tomando en cuenta que se trata de un espacio tridimensional, es decir que no se consideran objetos en $[4]$, el grupo de los axiomas de Incidencia de Hilbert se pueden probar en la Axiomática de Conglomerados.
+\end{center}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item 	Si $A,B \in [0]$ tales que $A$ y $B$ son distintos, entonces $(\exists! R \in [1])(AtR \wedge BtR)$, donde $R$ es $(A \uparrow B)$, los puntos $A$ y $B$ determinan la única recta $R$
+    \item 
+    \item 
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (2.75,1.5) circle  (0.05);\draw[red] node at (2.75, 1.2) {R};
+\filldraw[red] (2.75,1.5) circle  (0.05);\draw[blue] node at (2.75, 1.75) {$A \uparrow B$};
+\filldraw[red] (2.25,1) circle  (0.05);\draw[red] node at (2.25, 0.75) {A};
+\filldraw[red] (3.5,1) circle  (0.05);\draw[red] node at (3.5, 0.75) {B};
+
+\draw[blue, ->] (2.25,1) arc (-60:-25:1);
+\draw[blue, ->] (3.5,1) arc (35:82:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item 	Si $A,B \in [0]$ tales que $A$ y $B$ son distintos, entonces $(\exists! R \in [1])(AtR \wedge BtR)$, donde $R$ es $(A \uparrow B)$, los puntos $A$ y $B$ determinan la única recta $R$
+    \item Si $A,B,C \in [0]$ distintos entre sí tales que $AtR, BtR, CtR$, con $R \cong (A \uparrow B)$ y $R \cong (A \uparrow C)$ entonces $(B \uparrow C) \cong R$.
+    \item 
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (2.75,1.5) circle  (0.05);\draw[red] node at (2.75, 1.75) {$R \cong (A \uparrow B) \cong (A \uparrow C)$};
+\draw[blue] node at (2.75, 2.25) {$(B \uparrow C) \cong R$};
+\filldraw[red] (1,1) circle  (0.05);\draw[red] node at (1, 0.75) {A};
+\filldraw[red] (2.25,1) circle  (0.05);\draw[red] node at (2.25, 0.75) {B};
+\filldraw[red] (3.5,1) circle  (0.05);\draw[red] node at (3.5, 0.75) {C};
+
+\draw[blue, ->] (1,1) arc (130:82:2);
+\draw[blue, ->] (2.25,1) arc (-60:-25:1);
+\draw[blue, ->] (3.5,1) arc (35:82:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item 	Si $A,B \in [0]$ tales que $A$ y $B$ son distintos, entonces $(\exists! R \in [1])(AtR \wedge BtR)$, donde $R$ es $(A \uparrow B)$, los puntos $A$ y $B$ determinan la única recta $R$
+    \item Si $A,B,C \in [0]$ distintos entre sí tales que $AtR, BtR, CtR$, con $R \cong (A \uparrow B)$ y $R \cong (A \uparrow C)$ entonces $(B \uparrow C) \cong R$.
+    \item Sean $A,B,C \in [0]$ distintos entre sí tales que $AuK, BuK, CuK$ y $(A \uparrow B) \ncong (A \uparrow C)$ entonces $K \cong ((A \uparrow B) \uparrow(A \uparrow C))$
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (1.75,1.5) circle  (0.05);\draw[red] node at (1.60, 1.2) {$(A \uparrow B)$};
+\filldraw[red] (2.75,1.5) circle  (0.05);\draw[red] node at (2.90, 1.2) {$(B \uparrow C)$};
+\filldraw[red] (1,1) circle  (0.05);\draw[red] node at (1, 0.75) {A};
+\filldraw[red] (2.25,1) circle  (0.05);\draw[red] node at (2.25, 0.75) {B};
+\filldraw[red] (3.5,1) circle  (0.05);\draw[red] node at (3.5, 0.75) {C};
+\filldraw[red] (2.25,2) circle  (0.05);\draw[red] node at (2.25, 1.75) {K};
+\filldraw[blue] (2.25,2) circle  (0.05);\draw[blue] node at (2.25, 2.25) {$(A \uparrow B) \uparrow(A \uparrow C)$};
+
+
+\draw[->] (1,1) arc (150:100:1);
+\draw[blue,->] (1.75,1.5) arc (152:115:1);
+\draw[->] (2.25,1) arc (-120:-155:1);
+\draw[->] (2.25,1) arc (-60:-25:1);
+\draw[->] (3.5,1) arc (35:82:1);
+\draw[blue,->] (2.75,1.5) arc (28:65:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item $A,B,C \in [0]$ no situados en la misma recta, determinan $K \in [2]$ por completo, es decir, si $A,B,D$ también determinan $K$ tales que $A,B,D$ no están en la misma recta y $C \ncong D$, entonces $B,C,D$ determinan $K$.
+    \item
+    \item
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (1.5,1.5) circle  (0.05);%\draw[red] node at (1.10, 1.2) {$(A \uparrow B)$};
+\filldraw[red] (2.5,1.5) circle  (0.05);%\draw[red] node at (2.40, 1.2) {$(B \uparrow C)$};
+\filldraw[red] (0.75,1) circle  (0.05);\draw[red] node at (0.75, 0.75) {A};
+\filldraw[red] (2,1) circle  (0.05);\draw[red] node at (2, 0.75) {B};
+\filldraw[red] (3.25,1) circle  (0.05);\draw[red] node at (3.25, 0.75) {C};
+\filldraw[blue] (3.85,1) circle  (0.05);\draw[blue] node at (3.85, 0.75) {D};
+\filldraw[blue] (3.85,1.5) circle  (0.05);%\draw[blue] node at (3.85, 0.75) {D};
+\filldraw[blue] (3.25,1.5) circle  (0.05);%\draw[blue] node at (3.85, 0.75) {D};
+\filldraw[red] (2,2) circle  (0.05);\draw[red] node at (2, 1.75) {K};
+%\filldraw[blue] (2,2) circle  (0.05);\draw[blue] node at (2, 2.25) {$(A \uparrow B) \uparrow(A \uparrow C)$};
+
+
+\draw[->] (0.75,1) arc (150:100:1);
+\draw[blue,->] (2,1) arc (-82:-58:3);
+\draw[->] (1.5,1.5) arc (152:115:1);
+\draw[->] (2,1) arc (-120:-155:1);
+\draw[->] (2,1) arc (-60:-25:1);
+\draw[->] (3.25,1) arc (35:82:1);
+\draw[->] (2.5,1.5) arc (28:65:1);
+\draw[blue,->] (3.25,1) arc (-5:8:2);
+\draw[blue,->] (3.25,1) arc (-60:-40:2);
+\draw[blue,->] (3.85,1) arc (-5:8:2);
+\draw[blue,->] (3.25,1.5) arc (46:80:2);
+\draw[blue,->] (3.85,1.5) arc (46:100:2);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item $A,B,C \in [0]$ no situados en la misma recta, determinan $K \in [2]$ por completo, es decir, si $A,B,D$ también determinan $K$ tales que $A,B,D$ no están en la misma recta y $C \ncong D$, entonces $B,C,D$ determinan $K$.
+    \item 	Si $A, B \in [0]$ en $R \in [1]$ yacen en $K \in [2]$ entonces todo $R$ yace en $K$.
+    \item 
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (2.5,1.5) circle  (0.05);\draw[red] node at (2.40, 1.2) {R};
+\filldraw[red] (2,1) circle  (0.05);\draw[red] node at (2, 0.75) {A};
+\filldraw[red] (3.25,1) circle  (0.05);\draw[red] node at (3.25, 0.75) {B};
+\filldraw[red] (2.5,2) circle  (0.05);\draw[red] node at (2.5, 2.25) {K};
+
+\draw[->] (2,1) arc (170:140:2);
+\draw[->] (2,1) arc (152:115:1);
+\draw[->] (3.25,1) arc (35:82:1);
+\draw[->] (3.25,1) arc (20:55:2);
+\draw[red,->] (2.5,1.5) arc (-5:8:2);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item $A,B,C \in [0]$ no situados en la misma recta, determinan $K \in [2]$ por completo, es decir, si $A,B,D$ también determinan $K$ tales que $A,B,D$ no están en la misma recta y $C \ncong D$, entonces $B,C,D$ determinan $K$.
+    \item 	Si $A, B \in [0]$ en $R \in [1]$ yacen en $K \in [2]$ entonces todo $R$ yace en $K$.
+    \item Si $K, L \in [2]$ tienen $A \in [0]$ en común, entonces tienen al menos otro $B \in [0]$ en común (solo se cumple si se restringe de 0 a 3-dim).
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};;\draw[red] node at (5.5, 3) {X};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};;\draw[red] node at (5.5, 0.5) {X};
+
+\filldraw[red] (2,1) circle  (0.05);\draw[red] node at (2, 0.75) {A};
+\filldraw[red] (3.25,1) circle  (0.05);\draw[red] node at (3.25, 0.75) {B};
+\filldraw[red] (2.5,2) circle  (0.05);\draw[red] node at (2.5, 2.25) {K};
+\filldraw[red] (3,2) circle  (0.05);\draw[red] node at (3, 2.25) {L};
+
+\draw[->] (2,1) arc (170:140:2);
+\draw[->] (2,1) arc (155:115:2);
+\draw[red,->] (3.25,1) arc (2:30:2);
+\draw[red,->] (3.25,1) arc (22:55:2);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item En cada $R \in [1]$ hay al menos dos diferentes $A, B \in [0]$, en cada $K \in [2]$ hay a menos tres diferentes $A, B, C \in [0]$ que no están en la misma recta.
+    \item
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (2.5,1.5) circle  (0.05);\draw[red] node at (2.40, 1.2) {R};
+\filldraw[red] (2,1) circle  (0.05);\draw[red] node at (2, 0.75) {A};
+\filldraw[red] (3.25,1) circle  (0.05);\draw[red] node at (3.25, 0.75) {B};
+
+\draw[->] (2,1) arc (152:115:1);
+\draw[->] (3.25,1) arc (35:82:1);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item En cada $R \in [1]$ hay al menos dos diferentes $A, B \in [0]$, en cada $K \in [2]$ hay a menos tres diferentes $A, B, C \in [0]$ que no están en la misma recta.
+    \item
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (1,1) circle  (0.05);\draw[red] node at (1, 0.75) {A};
+\filldraw[red] (2.25,1) circle  (0.05);\draw[red] node at (2.25, 0.75) {B};
+\filldraw[red] (3.5,1) circle  (0.05);\draw[red] node at (3.5, 0.75) {C};
+\filldraw[red] (2.25,2) circle  (0.05);\draw[red] node at (2.25, 2.25) {K};
+\filldraw[red] (1.75,1.5) circle  (0.05);
+\filldraw[red] (2.75,1.5) circle  (0.05);
+
+\draw[->] (1,1) arc (150:100:1);
+\draw[->] (2.25,1) arc (-120:-155:1);
+\draw[->] (2.25,1) arc (-60:-25:1);
+\draw[->] (3.5,1) arc (35:82:1);
+\draw[red,->] (3.5,1) arc (35:63:3);
+\draw[red,->] (1,1) arc (145:118:3);
+\draw[red,->] (2.25,1) arc (-5:13:3);
+
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\begin{frame}{Teoría de Conglomerados - Axiomas de Incidencia (H)}
+
+\begin{columns}
+\column{0.5\textwidth}
+
+\begin{itemize}
+    \item En cada $R \in [1]$ hay al menos dos diferentes $A, B \in [0]$, en cada $K \in [2]$ hay a menos tres diferentes $A, B, C \in [0]$ que no están en la misma recta.
+    \item Existen al menos cuatro $A,B,C,D \in [0]$ no situados en un mismo plano. 
+\end{itemize}
+
+\column{0.5\textwidth}
+
+\begin{tikzpicture}
+
+\draw node at (5.5, 3) {$\dots$};
+\draw[thick] (0.5,2.5) -- (4,2.5);\draw node at (5.5, 2.5) {[3]};
+\draw[thick] (0.5,2) -- (4,2);\draw node at (5.5, 2) {[2]};
+\draw[thick] (0.5,1.5) -- (4,1.5);\draw node at (5.5, 1.5) {[1]};
+\draw[thick] (0.5,1) -- (4,1);\draw node at (5.5, 1) {[0]};
+\draw node at (5.5, 0.5) {$\dots$};
+
+\filldraw[red] (0.75,1) circle  (0.05);\draw[red] node at (0.75, 0.75) {A};
+\filldraw[red] (2,1) circle  (0.05);\draw[red] node at (2, 0.75) {B};
+\filldraw[red] (3.25,1) circle  (0.05);\draw[red] node at (3.25, 0.75) {C};
+\filldraw[blue] (3.85,1) circle  (0.05);\draw[blue] node at (3.85, 0.75) {D};
+\filldraw[red] (2,2) circle  (0.05);\draw[red] node at (2, 2.25) {K};
+\draw[red] node at (3, 1.7) {X};
+
+\draw[->] (0.75,1) arc (150:107:2);
+\draw[->] (3.25,1) arc (31:77:2);
+\draw[->] (2,1) arc (-5:12:3);
+\draw[blue,->] (3.85,1) arc (42:80:3);
+\end{tikzpicture}
+
+\end{columns}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,29 @@
+name: Compilar presentación LaTeX
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Compilar main.tex
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: main.tex
+          latexmk_shell_escape: false
+
+      - name: Publicar PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: SOBOLMAT-congreso-2026-pdf
+          path: main.pdf
